@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block title %}Return Automobile{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'fleet/css/return_automobilez.css' %}">
+
+{% include "fleet/navbar.html" %}
+
+<div class="form-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h3>Return Automobile</h3>
+        </div>
+        <div class="form-body">
+            <p><strong>Automobile:</strong> {{ record.automobile.license_plate }} ({{ record.automobile.make }} {{ record.automobile.model }})</p>
+            <p><strong>Borrowed by:</strong> {{ record.borrower_name }} on {{ record.borrowed_at|date:"Y-m-d H:i" }}</p>
+            
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-accent">Confirm Return</button>
+                    <a href="{% url 'fleet:automobile_list' %}" class="btn-muted">Cancel</a>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

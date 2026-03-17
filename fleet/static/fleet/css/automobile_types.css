@@ -1,0 +1,92 @@
+/* Page Header */
+.page-header {
+    margin-top: 25px;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.page-header h2 {
+    color: #222;
+    text-align: center;
+    font-size: 40px;
+}
+
+/* Add Button */
+.btn-accent {
+    padding: 8px 14px;
+    background-color: #888;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn-accent:hover {
+    background-color: #777;
+}
+
+/* Table Wrapper */
+.table-wrapper {
+    height: 100vh;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+/* Data Table */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #e0e0e0;
+    font-weight: 600;
+}
+
+.data-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Table Action Buttons */
+.action-cell a {
+    margin-right: 5px;
+    text-decoration: none;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    color: white;
+    display: inline-block;
+}
+
+/* Button Colors */
+.btn-secondary { background-color: #666; }
+.btn-secondary:hover { background-color: #555; }
+
+.btn-danger { background-color: #cc0000; }
+.btn-danger:hover { background-color: #990000; }
+
+/* Empty Table Message */
+.text-muted-center {
+    color: #777;
+    text-align: center;
+    padding: 20px 0;
+    font-style: italic;
+}

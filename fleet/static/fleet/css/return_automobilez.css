@@ -1,0 +1,109 @@
+/* Form Container */
+.form-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Form Card */
+.form-card {
+    width: 100%;
+    max-width: 600px;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* Form Header */
+.form-header {
+    background-color: #ddd;
+    padding: 20px 25px;
+    border-bottom: 1px solid #ccc;
+}
+
+.form-header h3 {
+    margin: 0;
+    font-weight: 600;
+    color: #222;
+}
+
+/* Form Body */
+.form-body {
+    padding: 25px;
+    color: #333;
+}
+
+.form-body p {
+    margin-bottom: 15px;
+}
+
+/* Form Actions */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+/* Buttons */
+.btn-accent,
+.btn-muted {
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+}
+
+/* Confirm Return Button */
+.btn-accent {
+    background-color: #888;
+    color: white;
+}
+
+.btn-accent:hover {
+    background-color: #777;
+}
+
+/* Cancel Button */
+.btn-muted {
+    background-color: #666;
+    color: white;
+}
+
+.btn-muted:hover {
+    background-color: #555;
+}
+
+/* Textarea / Inputs (if form has them) */
+.form-body input,
+.form-body select,
+.form-body textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-body input:focus,
+.form-body select:focus,
+.form-body textarea:focus {
+    border-color: #888;
+    box-shadow: 0 0 5px rgba(136, 136, 136, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .form-actions {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Borrow Records{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'fleet/css/borrow_records.css' %}">
+
+{% include "fleet/navbar.html" %}
+
+<div class="page-header">
+    <h2>Borrow Records</h2>
+</div>
+
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Automobile</th>
+                <th>Borrower</th>
+                <th>Borrowed By (Staff name)</th>
+                <th>Borrowed At</th>
+                <th>Returned At</th>
+                <th>Due Date</th>  <!-- New column -->
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.automobile.license_plate }} ({{ record.automobile.make }} {{ record.automobile.model }})</td>
+                <td>{{ record.borrower_name }}</td>
+                <td>
+                    {% if record.borrowed_by %}
+                        {{ record.borrowed_by }}  <!-- or use record.borrowed_by.username -->
+                    {% else %}
+                        <span class="status-badge secondary">Unknown</span>
+                    {% endif %}
+                </td>
+                <td>{{ record.borrowed_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                    {% if record.returned_at %}
+                        {{ record.returned_at|date:"Y-m-d H:i" }}
+                    {% else %}
+                        <span class="status-badge warning">Not returned</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if record.due_date %}
+                        {{ record.due_date|date:"Y-m-d" }}
+                        {% if record.is_overdue %}
+                            <span class="status-badge danger">Overdue</span>
+                        {% endif %}
+                    {% else %}
+                        <span class="status-badge secondary">Not set</span>
+                    {% endif %}
+                </td>
+                <td>{{ record.notes|truncatechars:50 }}</td>
+                <td>
+                    <a href="{% url 'fleet:edit_due_date' record.pk %}" class="btn-muted">Edit Due Date</a>
+                    <!-- You could also add a "Return" link here if not returned -->
+                    {% if not record.returned_at %}
+                        <a href="{% url 'fleet:return_auto' record.pk %}" class="btn-muted">Return</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="text-muted-center">No borrow records found.</td>  <!-- Update colspan -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

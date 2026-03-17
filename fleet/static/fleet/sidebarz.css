@@ -1,0 +1,45 @@
+/* Centered Horizontal Glass Navbar */
+.floating-nav {
+    position: fixed; 
+    top: 60px;
+    left: 25%;
+    transform: translateX(-50);
+    z-index: 1000;
+}
+
+/* Glass Navbar Container */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 12px 30px;
+    border-radius: 50px;
+
+    /* Glass effect */
+    background: rgba(48, 55, 63, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+
+    transition: 0.3s ease;
+}
+
+/* Navbar Links */
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.nav-menu a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+

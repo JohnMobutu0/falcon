@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Fleet Dashboard{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'fleet/css/dashboard.css' %}">
+
+<div class="dashboard-container">
+
+    {% include "fleet/navbar.html" %}
+
+    <div class="dashboard-section">
+
+        <!-- Status Boxes -->
+        <div class="card-grid">
+            {% for status in status_counts %}
+            <div class="status-box">
+                <h5>{{ status.name }}</h5>
+                <p class="card-number">{{ status.count }}</p>
+            </div>
+            {% endfor %}
+
+            <div class="status-box status-box-total">
+                <h5>Total</h5>
+                <p class="card-number">{{ total_autos }}</p>
+            </div>
+        </div>
+
+        <!-- Overdue Alert -->
+        {% if overdue_borrows %}
+        <div class="alert-warning">
+            <h4>Overdue Borrows ({{ overdue_borrows|length }})</h4>
+            <ul class="clean-list">
+                {% for record in overdue_borrows %}
+                <li>
+                    <div>
+                        <strong>{{ record.automobile }}</strong> borrowed by {{ record.borrower_name }}<br>
+                        <small>
+                        Due: {{ record.due_date|date:"Y-m-d" }}
+                        ({{ record.due_date|timesince:now }} ago)
+                        </small>
+                    </div>
+                    <div>
+                        <a href="{% url 'fleet:return_auto' record.pk %}" class="btn-muted">Mark returned</a>
+                        <a href="{% url 'fleet:edit_due_date' record.pk %}" class="btn-muted">Edit due date</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+
+
+
+
+        <!-- Due Soon -->
+        {% if due_soon %}
+        <div class="alert-info">
+            <h4>⏳ Due Soon ({{ due_soon|length }})</h4>
+            <ul class="clean-list">
+                {% for record in due_soon %}
+                <li>
+                    <div>
+                        <strong>{{ record.automobile }}</strong> borrowed by {{ record.borrower_name }}<br>
+                        <small>Due: {{ record.due_date|date:"Y-m-d" }}</small>
+                    </div>
+                    <div>
+                        <a href="{% url 'fleet:return_auto' record.pk %}" class="btn-muted">Return</a>
+                        <a href="{% url 'fleet:edit_due_date' record.pk %}" class="btn-muted">Edit</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+
+
+
+
+        <!-- First Row: Never Borrowed & Most Borrowed -->
+        <div class="column-two">
+
+            <!-- Never Borrowed -->
+            <div class="card-panel">
+                <h5>Never Borrowed</h5>
+                {% if never_borrowed %}
+                <ul class="clean-list">
+                    {% for auto in never_borrowed %}
+                    <li>
+                        <span>{{ auto }} ({{ auto.license_plate }})</span>
+                        <a href="{% url 'fleet:borrow_auto' auto.pk %}" class="btn-accent">Borrow</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>All automobiles have been borrowed at least once.</p>
+                {% endif %}
+            </div>
+
+            <!-- Most Borrowed -->
+            <div class="card-panel">
+                <h5>Most Borrowed</h5>
+                {% if most_borrowed %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Automobile</th>
+                            <th>Borrow Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for auto in most_borrowed %}
+                        <tr>
+                            <td>{{ auto }}</td>
+                            <td>{{ auto.borrow_count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No borrow records yet.</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- Second Row: Least Borrowed & Recent Borrows -->
+        <div class="column-two">
+
+            <!-- Least Borrowed -->
+            <div class="card-panel">
+                <h5>Least Borrowed</h5>
+                {% if least_borrowed %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Automobile</th>
+                            <th>Borrow Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for auto in least_borrowed %}
+                        <tr>
+                            <td>{{ auto }}</td>
+                            <td>{{ auto.borrow_count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>Not enough data.</p>
+                {% endif %}
+            </div>
+
+            <!-- Recent Borrows -->
+            <div class="card-panel">
+                <h5>Recent Borrows</h5>
+                {% if recent_borrows %}
+               <ul class="recent-borrows-list">
+                    {% for record in recent_borrows %}
+                    <li class="recent-borrow-item">
+                        <div class="borrow-left">
+                            <strong class="borrow-auto">{{ record.automobile }}</strong>
+                            <span class="borrower-name">by {{ record.borrower_name }}</span>
+                            <div class="borrowed-date">
+                                <small>Borrowed: {{ record.borrowed_at|date:"Y-m-d H:i" }}</small>
+                            </div>
+                        </div>
+
+                        <div class="borrow-right">
+                            {% if record.returned_at %}
+                                <span class="label-success">Returned {{ record.returned_at|date:"Y-m-d" }}</span>
+                            {% else %}
+                                {% if record.due_date %}
+                                    {% if record.due_date < today %}
+                                        <span class="label-danger">Overdue ({{ record.due_date }})</span>
+                                    {% elif record.due_date <= due_soon_threshold %}
+                                        <span class="label-warning">Due soon: {{ record.due_date }}</span>
+                                    {% else %}
+                                        <span class="label-info">Due: {{ record.due_date }}</span>
+                                    {% endif %}
+                                    <a href="{% url 'fleet:edit_due_date' record.pk %}" class="btn-muted btn-edit">Edit</a>
+                                {% else %}
+                                    <span class="label-secondary">No due date</span>
+                                {% endif %}
+                                <a href="{% url 'fleet:return_auto' record.pk %}" class="btn-muted btn-return">Return</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No borrow records.</p>
+                {% endif %}
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+/* Form Container */
+.form-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Form Card */
+.form-card {
+    width: 100%;
+    max-width: 600px;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* Danger Card Variant */
+.danger-card {
+    border: 1px solid #cc0000;
+}
+
+/* Form Header */
+.form-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #ccc;
+}
+
+.danger-header {
+    background-color: #cc0000;
+    color: white;
+}
+
+.form-header h3 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Form Body */
+.form-body {
+    padding: 25px;
+    color: #333;
+}
+
+.text-muted {
+    color: #777;
+    font-style: italic;
+}
+
+/* Form Actions */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+/* Buttons */
+.btn-danger,
+.btn-muted {
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+}
+
+/* Delete Button */
+.btn-danger {
+    background-color: #cc0000;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #990000;
+}
+
+/* Cancel Button */
+.btn-muted {
+    background-color: #666;
+    color: white;
+}
+
+.btn-muted:hover {
+    background-color: #555;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .form-actions {
+        flex-direction: column;
+    }
+}

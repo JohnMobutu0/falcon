@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'fleet/sidebarz.css' %}"><br><br><br>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="floating-nav">
+
+    <div class="nav-menu">
+        <a href="{% url 'fleet:dashboard' %}">Dashboard </a>
+        <a href="{% url 'fleet:automobile_list' %}">Automobiles</a>
+        <a href="{% url 'fleet:type_list' %}">Types</a>
+        <a href="{% url 'fleet:status_list' %}"> Statuses</a>
+        <a href="{% url 'fleet:borrow_list' %}"> Borrow Records</a>
+    </div>
+</div>
+
+<div class="fleet-content"> 
+    {% block content %} {% endblock %} 
+</div>

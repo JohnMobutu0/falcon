@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block title %}Automobile Statuses{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'fleet/css/automobile_statusess.css' %}">
+
+{% include "fleet/navbar.html" %}
+
+<div class="page-header">
+    <h2>Automobile Statuses</h2>
+</div>
+
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for status in statuses %}
+            <tr>
+                <td>{{ status.name }}</td>
+                <td><span class="status-badge">{{ status.color }}</span></td>
+                <td>{{ status.description|default:"—" }}</td>
+                <td class="action-cell">
+                    <a href="{% url 'fleet:status_edit' status.pk %}" class="btn-small btn-secondary">Edit</a>
+                    <a href="{% url 'fleet:status_delete' status.pk %}" class="btn-small btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-muted-center">No statuses found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+    <a href="{% url 'fleet:status_create' %}" class="btn-accent">+ New Status</a>
+
+</div>
+{% endblock %}

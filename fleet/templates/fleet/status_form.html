@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block title %}{% if object %}Edit{% else %}Create{% endif %} Status{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'fleet/css/automobile_status_form.css' %}">
+
+{% include "fleet/navbar.html" %}
+
+<div class="form-container">
+    <div class="form-card">
+        <div class="form-header">
+            <h3>{% if object %}Edit{% else %}Create{% endif %} Automobile Status</h3>
+        </div>
+        <div class="form-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-actions">
+                    <button type="submit" class="btn-accent">Save</button>
+                    <a href="{% url 'fleet:status_list' %}" class="btn-muted">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

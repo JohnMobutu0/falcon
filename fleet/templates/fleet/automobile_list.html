@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Automobiles{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'fleet/css/automobile_lists.css' %}">
+
+{% include "fleet/navbar.html" %}
+
+<div class="page-header">
+    <h2>Automobiles</h2>
+    
+</div>
+
+<div class="table-wrapper">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>License Plate</th>
+                <th>Make/Model</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Borrowed?</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for auto in autos %}
+            <tr>
+                <td>{{ auto.license_plate }}</td>
+                <td>{{ auto.make }} {{ auto.model }} ({{ auto.year }})</td>
+                <td>{{ auto.type.name }}</td>
+                <td>
+                    <span class="label-{{ auto.status.color }}">{{ auto.status.name }}</span>
+                </td>
+                <td>
+                    {% if auto.is_borrowed %}
+                        <span class="label-warning">Borrowed</span>
+                    {% else %}
+                        <span class="label-success">Available</span>
+                    {% endif %}
+                </td>
+                <td class="action-cell">
+                    <a href="{% url 'fleet:automobile_edit' auto.pk %}" class="btn-small btn-secondary">Edit</a>
+                    <a href="#" class="btn-small btn-danger">Delete</a>
+                    {% if auto.is_borrowed %}
+                        <a href="{% url 'fleet:return_auto' auto.current_borrow_record.pk %}" class="btn-small btn-primary">Return</a>
+                    {% else %}
+                        <a href="{% url 'fleet:borrow_auto' auto.pk %}" class="btn-small btn-success">Borrow</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-muted-center">No automobiles found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+    <a href="{% url 'fleet:automobile_create' %}" class="btn_add_auto">+ Add Automobile</a>
+</div>
+{% endblock %}
